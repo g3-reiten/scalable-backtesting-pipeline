@@ -17,7 +17,7 @@ class BtMain:
     def main_runner(self, name, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
         
         if path==None:
-            pass
+            path=f'./data/{name}.csv'
         if end_date==None:
             end_date= datetime.strftime(datetime.now(),"%Y-%m-%d")
             
