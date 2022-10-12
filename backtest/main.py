@@ -18,12 +18,19 @@ class BtMain:
     def __init__(self) -> None:
         pass
     def main_runner(self, name, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
+        
         #mlflow.start_run()
         if path==None:
             path=f'./data/{name}.csv'
         if end_date==None:
             end_date= datetime.strftime(datetime.now(),"%Y-%m-%d")
             
+        mlflow.set_tracking_uri('http://localhost:5040') 
+        mlflow.start.run()  
+        mlflow.log_param('name',name)
+        mlflow.log_param('start_date', start_date)
+        mlflow.log_param('end_date',end_date)
+        
         # Check whether the specified
         # path exists or not
         path_exist = os.path.exists(path)
