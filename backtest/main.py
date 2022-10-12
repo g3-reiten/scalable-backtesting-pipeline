@@ -7,10 +7,10 @@ import yfinance as yf
 #from backtrader import plot 
 import pandas as pd
 import os
-
 from datetime import datetime
 # current_time = datetime.now().strftime('%a %b %d, %Y %I:%M:%S %p')
 # print(current_time)
+
 class BtMain:
     
     def __init__(self) -> None:
@@ -30,7 +30,14 @@ class BtMain:
         if not path_exist:
             data_feed = yf.download(name,start_date,end_date)
             data_feed.to_csv(f'./data/{name}.csv')
-        return data_feed
+        
+        cerebro = bt.Cerebro()
+        data = bt.feeds.YahooFinanceCSVData(dataname=data_feed,fromdate=datetime.strptime(start_date,"%Y-%m-%d"),
+        todate=datetime.strptime(end_date,"%Y-%m-%d"),reverse=False )    
+        cerebro.adddata(data) 
+           
+         #return data_feed
+        return cerebro
 
 
 
