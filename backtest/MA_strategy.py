@@ -48,19 +48,19 @@ class MaStrategy(bt.Strategy):
 		self.order = None
   
   
-if __name__ == '__main__':
-        # Create a cerebro instance, add our strategy, some starting cash at broker and a 0.1% broker commission
-        cerebro = bt.Cerebro()
-        cerebro.addstrategy(MaStrategy)
-        cerebro.broker.setcash(10000)
-        cerebro.broker.setcommission(commission=0.001)
-        FEED = BtMain()
-        data = bt.feeds.PandasData(dataname=FEED.get_feeds('SOL-USD','2021-1-1','2022-1-1'))
-        cerebro.adddata(data)
+# if __name__ == '__main__':
+#         # Create a cerebro instance, add our strategy, some starting cash at broker and a 0.1% broker commission
+#         cerebro = bt.Cerebro()
+#         cerebro.addstrategy(MaStrategy)
+#         cerebro.broker.setcash(10000)
+#         cerebro.broker.setcommission(commission=0.001)
+#         FEED = BtMain()
+#         data = bt.feeds.PandasData(dataname=FEED.get_feeds('SOL-USD','2021-1-1','2022-1-1'))
+#         cerebro.adddata(data)
     
-        print('<START> Brokerage account: $%.2f' % cerebro.broker.getvalue())
-        cerebro.run()
-        print('<FINISH> Brokerage account: $%.2f' % cerebro.broker.getvalue())
-        # Plot the strategy
-        cerebro.plot(style='candlestick',loc='grey', grid=False) #You can leave inside the paranthesis empty
+#         print('<START> Brokerage account: $%.2f' % cerebro.broker.getvalue())
+#         cerebro.run()
+#         print('<FINISH> Brokerage account: $%.2f' % cerebro.broker.getvalue())
+#         # Plot the strategy
+#         cerebro.plot(style='candlestick',loc='grey', grid=False) #You can leave inside the paranthesis empty
             

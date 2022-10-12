@@ -8,11 +8,13 @@ from datetime import datetime
 import mlflow
 from mlflow import log_metric, log_param, log_artifacts, log_params
 
+from backtrader.analyzers import SharpeRatio, Returns, DrawDown, TradeAnalyzer 
+from MA_strategy import MaStrategy
 class BtMain:
     """A class that sets up the cerebro and runs the backtests"""
     # def __init__(self) -> None:
     #     pass
-    def main_runner(self, name, strategy, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
+    def main_runner(self, name, strategy, start_date, end_date=None, path=None, cash=600 ): # accepting path to data so as to not download the data if it already exists.
         if path==None:
             path=f'./data/{name}.csv'
         if end_date==None:
@@ -28,6 +30,7 @@ class BtMain:
             log_param('name',name)
             log_param('start_date', start_date)
             log_param('end_date',end_date)
+            log_param('starting_cash',cash)
         
         # Check whether the specified
         # path exists or not
@@ -39,6 +42,7 @@ class BtMain:
             data_feed.to_csv(path)
         
         cerebro = bt.Cerebro()
+        cerebro.broker.setcash(cash)
         data = bt.feeds.YahooFinanceCSVData(dataname=path,fromdate=datetime.strptime(start_date,"%Y-%m-%d"),
         todate=datetime.strptime(end_date,"%Y-%m-%d"),reverse=False )    
         cerebro.adddata(data) 
@@ -53,7 +57,7 @@ class BtMain:
         # Print out the starting conditions
         #print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
         
-        cerebro.run()
+        cerRun=cerebro.run()
         
         final=cerebro.broker.getvalue()
         
