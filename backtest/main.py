@@ -6,6 +6,7 @@ import datetime
 import yfinance as yf
 #from backtrader import plot 
 import pandas as pd
+import os
 
 from datetime import datetime
 # current_time = datetime.now().strftime('%a %b %d, %Y %I:%M:%S %p')
@@ -21,8 +22,14 @@ class BtMain:
         if end_date==None:
             end_date= datetime.strftime(datetime.now(),"%Y-%m-%d")
             
-        data_feed = yf.download(name,start_date,end_date)
-        data_feed.to_csv(f'./data/{name}.csv')
+        # Check whether the specified
+        # path exists or not
+        path_exist = os.path.exists(path)
+        #print(data_check)  
+         
+        if not path_exist:
+            data_feed = yf.download(name,start_date,end_date)
+            data_feed.to_csv(f'./data/{name}.csv')
         return data_feed
 
 
