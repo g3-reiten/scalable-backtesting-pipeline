@@ -12,7 +12,7 @@ class BtMain:
         pass
     def get_feeds(self, name, start_date, end_date):
         data_feed = yf.download(name,start_date,end_date)
-        data_feed.to_csv(f'./data/{name}.csv')
+        data_feed.to_csv(f'./data/{name}-{end_date}.csv')
         return data_feed
 
 
