@@ -12,7 +12,7 @@ from datetime import datetime
 # print(current_time)
 
 class BtMain:
-    
+    """A class that sets up the cerebro and runs the backtests"""
     def __init__(self) -> None:
         pass
     def main_runner(self, name, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
@@ -38,6 +38,9 @@ class BtMain:
            
          #return data_feed
         return cerebro
+    
+    def run_backtest(self, cerebro):
+        pass
 
 
 
