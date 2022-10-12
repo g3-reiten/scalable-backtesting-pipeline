@@ -1,17 +1,12 @@
-
 from __future__ import (absolute_import, division, print_function,unicode_literals)
 import backtrader as bt
 import datetime
-
 import yfinance as yf
-#from backtrader import plot 
 import pandas as pd
 import os
 from datetime import datetime
 import mlflow
 from mlflow import log_metric, log_param, log_artifacts, log_params
-# current_time = datetime.now().strftime('%a %b %d, %Y %I:%M:%S %p')
-# print(current_time)
 
 class BtMain:
     """A class that sets up the cerebro and runs the backtests"""
@@ -30,9 +25,9 @@ class BtMain:
             mlflow.set_tracking_uri('mlruns') 
             mlflow.set_experiment("strategy")
             mlflow.start_run(run_name=name)  
-            mlflow.log_param('name',name)
-            mlflow.log_param('start_date', start_date)
-            mlflow.log_param('end_date',end_date)
+            log_param('name',name)
+            log_param('start_date', start_date)
+            log_param('end_date',end_date)
         
         # Check whether the specified
         # path exists or not
