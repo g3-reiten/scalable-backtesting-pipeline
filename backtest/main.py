@@ -40,8 +40,12 @@ class BtMain:
         return cerebro
     
     def run_backtest(self, cerebro):
-        pass
+        cerebro.broker.setcash(10000.0)
+        starting = cerebro.broker.getvalue()
+        cerebro.run()
+        final=cerebro.broker.getvalue()
 
+    
 
 
 
