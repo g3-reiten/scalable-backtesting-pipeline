@@ -3,23 +3,13 @@ import Login from '../components/login'
 import Register from '../components/register'
 
 export default function Home() {
-  let hasAccount = true;
-  let Text = "Create Account";
-  function Page() {
-    let component;
-    let button;
-    if (!hasAccount) {
-      component = <Register />;
-      Text = "Do you already have an account?"
-    } else {
-      component = <Login />;
-      Text ="Create Account"
-    }
-    return component;
+  function manageLogin() {
+    document.getElementById("login").style.display = 'none';
+    document.getElementById("register").style.display = 'block';
   }
-  function changeHasAcc() {
-    hasAccount = !hasAccount;
-    Page()
+  function manageRegister() {
+    document.getElementById("login").style.display = 'block';
+    document.getElementById("register").style.display = 'none';
   }
   
   return (
@@ -40,9 +30,13 @@ export default function Home() {
         </p>
 
         <div className="grid">
-          <div className="card">
-            <Page />  
-            <button className="btn" onClick={changeHasAcc}>{ Text }</button>         
+          <div className="card" id="register">
+            <Register /> 
+            <button className="btn btn-link" onClick={manageRegister}>Do you already have an account?</button>        
+          </div>
+          <div className="card" id="login">
+            <Login />   
+            <button className="btn btn-link" onClick={manageLogin}>Create Account</button>       
           </div>
         </div>
       </main>
@@ -63,6 +57,9 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+        }
+        #login {
+          display: none;
         }
 
         main {

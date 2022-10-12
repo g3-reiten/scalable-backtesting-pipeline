@@ -5,10 +5,6 @@ import * as Yup from 'yup';
 import { Layout } from './account/Layout';
 
 
-// import { Link } from 'components';
-// import { Layout } from 'components/account';
-// import { userService, alertService } from 'services';
-
 export default Register;
 
 function Register() {
