@@ -31,12 +31,6 @@ function Login() {
           })
           .then((response) => {
             sessionStorage.setItem('token', response.data.token)
-            if (response.data.role == 'admin') {
-                router.push('/admin')
-            } else {
-                router.push('/trainee')
-            }
-            
           }).catch((error) => {
             if (error.response) {
               console.log(error.response)

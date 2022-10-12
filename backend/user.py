@@ -6,7 +6,7 @@ import jwt
 from datetime import datetime, timedelta
 from functools import wraps
 from create_db import User, db, app
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 CORS(app)
 
 def token_required(f):
@@ -43,7 +43,6 @@ def get_all_users(current_user):
 			'public_id': user.public_id,
 			'name' : user.name,
 			'email' : user.email,
-			'role':user.role
 		})
 
 	return jsonify({'users': output})
@@ -51,6 +50,7 @@ def get_all_users(current_user):
 @app.route('/login', methods =['POST'])
 def login():
 	auth =  request.json
+
 	if not auth or not auth.get('email') or not auth.get('password'):
 		return make_response(
 			'Could not verify',
@@ -61,24 +61,23 @@ def login():
 	user = User.query\
 		.filter_by(email = auth.get('email'))\
 		.first()
-
+	
 	if not user:
 		return make_response(
 			'Could not verify',
 			401,
 			{'WWW-Authenticate' : 'Basic realm ="User does not exist !!"'}
 		)
-
+	
 	if check_password_hash(user.password, auth.get('password')):
 		token = jwt.encode({
 			'public_id': user.public_id,
 			'exp' : datetime.utcnow() + timedelta(minutes = 30)
 		}, app.config['SECRET_KEY'])
-
+	
 		return make_response(
-			jsonify({'token' : token.decode('UTF-8'),
-			'role' : user.role
-			}), 201)
+			jsonify({'token' : token.decode('UTF-8')}), 201)
+		
 	return make_response(
 		'Could not verify',
 		403,
@@ -87,10 +86,9 @@ def login():
 
 @app.route('/signup', methods =['POST'])
 def signup():
-	data = request.form
-
-	name, email = data.get('name'), data.get('email')
-	role = data.get('role')
+	data = request.json
+	firstName, lastName = data.get('firstName'), data.get('lastName')
+	email= data.get('email')
 	password = data.get('password')
 
 	user = User.query\
@@ -99,14 +97,14 @@ def signup():
 	if not user:
 		user = User(
 			public_id = str(uuid.uuid4()),
-			name = name,
+			firstName = firstName,
+			lastName = lastName,
 			email = email,
-			role = role,
 			password = generate_password_hash(password)
 		)
 		db.session.add(user)
 		db.session.commit()
-
+		print(user)
 		return make_response('Successfully registered.', 201)
 	else:
 		return make_response('User already exists. Please Log in.', 202)
