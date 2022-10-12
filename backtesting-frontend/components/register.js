@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Layout } from './account/Layout';
+import axios from "axios";
 
 
 export default Register;
@@ -29,12 +30,26 @@ function Register() {
     const { errors } = formState;
 
     function onSubmit(user) {
-        // return userService.register(user)
-        //     .then(() => {
-        //         alertService.success('Registration successful', { keepAfterRouteChange: true });
-        //         router.push('login');
-        //     })
-        //     .catch(alertService.error);
+        axios({
+            method: "POST",
+            url:"http://127.0.0.1:5000/signup",
+            data:{
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.username,
+              password: user.password,
+             }
+          })
+          .then((response) => {
+            sessionStorage.setItem('token', response.data.token)
+            
+          }).catch((error) => {
+            if (error.response) {
+              console.log(error.response)
+              console.log(error.response.status)
+              console.log(error.response.headers)
+              }
+          })  
     }
 
     return (
