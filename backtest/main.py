@@ -8,6 +8,8 @@ import yfinance as yf
 import pandas as pd
 import os
 from datetime import datetime
+import mlflow
+from mlflow import log_metric, log_param, log_artifacts, log_params
 # current_time = datetime.now().strftime('%a %b %d, %Y %I:%M:%S %p')
 # print(current_time)
 
@@ -16,7 +18,7 @@ class BtMain:
     def __init__(self) -> None:
         pass
     def main_runner(self, name, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
-        
+        #mlflow.start_run()
         if path==None:
             path=f'./data/{name}.csv'
         if end_date==None:
@@ -42,7 +44,12 @@ class BtMain:
     def run_backtest(self, cerebro):
         cerebro.broker.setcash(10000.0)
         starting = cerebro.broker.getvalue()
+        
+        # Print out the starting conditions
+        #print('Starting Portfolio Value: %.2f' % cerebro.broker.getvalue())
+        
         cerebro.run()
+        
         final=cerebro.broker.getvalue()
 
     
