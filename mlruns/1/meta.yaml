@@ -1,0 +1,6 @@
+artifact_location: mlruns/1
+creation_time: 1665609295954
+experiment_id: '1'
+last_update_time: 1665609295954
+lifecycle_stage: active
+name: strategy
