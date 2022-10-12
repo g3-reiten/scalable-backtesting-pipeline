@@ -18,8 +18,6 @@ class BtMain:
     # def __init__(self) -> None:
     #     pass
     def main_runner(self, name, strategy, start_date, end_date=None, path=None ): # accepting path to data so as to not download the data if it already exists.
-        x=1
-        #mlflow.start_run()
         if path==None:
             path=f'./data/{name}.csv'
         if end_date==None:
@@ -31,7 +29,7 @@ class BtMain:
                 pass
             mlflow.set_tracking_uri('mlruns') 
             mlflow.set_experiment("strategy")
-            mlflow.start_run()  
+            mlflow.start_run(run_name=name)  
             mlflow.log_param('name',name)
             mlflow.log_param('start_date', start_date)
             mlflow.log_param('end_date',end_date)
@@ -65,7 +63,7 @@ class BtMain:
         final=cerebro.broker.getvalue()
         
 # Test = BtMain()
-# run = Test.main_runner("SOL-USD","SMA","2021-1-1","2022-1-1")
+# run = Test.main_runner("ETH-USD","SMA","2021-1-1","2022-1-1")
 
 
 
