@@ -2,15 +2,21 @@ import backtrader as bt
 import datetime
 import yfinance as yf
 #from backtrader import plot 
+import pandas as pd
+class GetFeeds:
+    
+    def __init__(self) -> None:
+        pass
+    def get_feeds(self, name, start_date, end_date):
+        data_feed = yf.download(name,start_date,end_date)
+  
+        return data_feed
+
+test = GetFeeds()
+    
+data = test.get_feeds('TSLA', '2018-01-01', '2019-01-01')
+data.to_csv(f'./data/TSLA.csv')
 
 
-def get_feeds(name, start_date, end_date):
-    data_feed = bt.feeds.PandasData(dataname=yf.download(name,start_date,end_date))
-    return data_feed
-# Instantiate Cerebro engine
 
 
-# Set data parameters and add to Cerebro
-data = get_feeds("ALGO-USD",'2021-6-25','2022-6-25')
-cerebro = bt.Cerebro()
-cerebro.adddata(data)
