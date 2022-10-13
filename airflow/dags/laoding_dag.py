@@ -1,3 +1,4 @@
+from cgi import print_exception
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -20,12 +21,11 @@ default_args = {
 }
 
 
-def read_and_modify_data():
+def read_and_data():
     """csv data reading and add uuid column
     """
     # dl = DataLoader()
-    df = pd.read_csv('/home/mohammed/Desktop/10 Academy projects/scalable-backtesting-pipeline/data/BTC-USD.csv')
-    df = pd.add_uuid(df)
+    df = pd.read_csv('/opt/scalable-backtesting-pipeline/data/BTC-USD.csv')
     df.to_csv('./BTC.csv',index=False)
 
 def create_table():
@@ -35,8 +35,8 @@ def create_table():
 def insert_data_to_db():
     """Insert data to db"""
     con = Connection()
-    news = pd.read_csv('./CleanAmharicNewsDataset.csv')
-    con.df_to_sql('amharicnews', news)
+    price = pd.read_csv('./BTC.csv')
+    con.df_to_sql('BTC_price', price)
 
 with DAG(
     dag_id='data_to_postgres_loader',
@@ -47,7 +47,7 @@ with DAG(
 ) as dag:
     data_reader_modifier = PythonOperator(
         task_id='read_data',
-        python_callable=read_and_modify_data
+        python_callable=read_and_data
     )
     table_creator = PythonOperator(
         task_id='table_creator',
