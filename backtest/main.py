@@ -3,6 +3,7 @@ from __future__ import (absolute_import, division, print_function,
 
 import datetime
 import os
+import sys
 from datetime import datetime
 
 import backtrader as bt
@@ -27,7 +28,7 @@ class BtMain:
             except:
                 pass
             mlflow.set_tracking_uri('mlruns') 
-            mlflow.set_experiment("strategy")
+            mlflow.set_experiment('MA_strategy')
             mlflow.start_run(run_name=name)  
             log_param('name',name)
             log_param('start_date', start_date)
@@ -43,6 +44,7 @@ class BtMain:
         
         cerebro = bt.Cerebro()
         cerebro.broker.setcash(cash)
+        cerebro.addstrategy(strategy)
         cerebro.addanalyzer(SharpeRatio, _name='sharpe')
         cerebro.addanalyzer(Returns, _name='returns')
         cerebro.addanalyzer(DrawDown, _name='draw')
@@ -94,7 +96,10 @@ class BtMain:
         #print(results)
         return results
         
+t = BtMain()
 
+cerebro = t.main_runner('BTC-USD',MaStrategy,'2021-1-1') 
+result = t.run_backtest(cerebro)
 
 
 

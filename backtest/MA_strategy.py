@@ -3,7 +3,6 @@ import datetime
 import backtrader as bt
 import yfinance as yf
 from backtrader import plot
-from main import BtMain
 
 
 class MaStrategy(bt.Strategy):
@@ -56,7 +55,6 @@ class MaStrategy(bt.Strategy):
 
 		self.log('OPERATION PROFIT, GROSS %.2f, NET %.2f' %
 					(trade.pnl, trade.pnlcomm))
-  
   
 
             
