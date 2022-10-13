@@ -5,16 +5,16 @@ import psycopg2
 class Connection:
     def __init__(self):
         self.engine = create_engine("postgresql+psycopg2://airflow:airflow@postgres/airflow", echo=True)
-        self.amharicnews_schema = "/opt/airflow/dags/scripts/schema/amharicnews.sql"
+        self.schema_schema = "/opt/airflow/dags/scripts/schema/schema.sql"
         
 
     def create_table(self):
         """
-        Create tables of amharicnews
+        Create tables of schema
         """
         try:
             with self.engine.connect() as conn:
-                with open(f'{self.amharicnews_schema}') as file:
+                with open(f'{self.schema_schema}') as file:
                     query = text(file.read())
                     conn.execute(query)
         except Exception as e:
