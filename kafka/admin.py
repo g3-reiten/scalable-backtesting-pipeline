@@ -7,7 +7,7 @@ from kafka.admin.client import KafkaAdminClient
 from kafka.admin import NewTopic
 
 client = KafkaAdminClient(
-    bootstrap_servers =["b-1.batch6w7.6qsgnf.c19.kafka.us-east-1.amazonaws.com:9092,b-2.batch6w7.6qsgnf.c19.kafka.us-east-1.amazonaws.com:9092"],
+    bootstrap_servers =["b-1.batch6w7.6qsgnf.c19.kafka.us-east-1.amazonaws.com:9092, b-2.batch6w7.6qsgnf.c19.kafka.us-east-1.amazonaws.com:9092"],
     api_version=(0,11,5)
 )
 print("API version:", client.config['api_version'])
