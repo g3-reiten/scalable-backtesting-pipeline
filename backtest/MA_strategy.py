@@ -1,8 +1,10 @@
-import backtrader as bt
 import datetime
+
+import backtrader as bt
 import yfinance as yf
-from backtrader import plot 
+from backtrader import plot
 from main import BtMain
+
 
 class MaStrategy(bt.Strategy):
     
@@ -46,6 +48,14 @@ class MaStrategy(bt.Strategy):
 		elif order.status in [order.Canceled, order.Margin, order.Rejected]:
 			self.log("Order was canceled/margin/rejected")
 		self.order = None
+
+
+	def notify_trade(self, trade):
+		if not trade.isclosed:
+			return
+
+		self.log('OPERATION PROFIT, GROSS %.2f, NET %.2f' %
+					(trade.pnl, trade.pnlcomm))
   
   
 
