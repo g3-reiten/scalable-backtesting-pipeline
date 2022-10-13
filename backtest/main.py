@@ -13,8 +13,6 @@ from backtrader.analyzers import SharpeRatio, Returns, DrawDown, TradeAnalyzer
 from MA_strategy import MaStrategy
 class BtMain:
     """A class that sets up the cerebro and runs the backtests"""
-    # def __init__(self) -> None:
-    #     pass
     def main_runner(self, name, strategy, start_date, end_date=None, path=None, cash=600 ): # accepting path to data so as to not download the data if it already exists.
         if path==None:
             path=f'./data/{name}.csv'
@@ -32,11 +30,9 @@ class BtMain:
             log_param('start_date', start_date)
             log_param('end_date',end_date)
             log_param('starting_cash',cash)
-        
-        # Check whether the specified
-        # path exists or not
-        path_exist = os.path.exists(path)
-        #print(data_check)  
+            
+   
+        path_exist = os.path.exists(path)     # path exists or not
          
         if not path_exist:
             data_feed = yf.download(name,start_date,end_date)
@@ -52,8 +48,7 @@ class BtMain:
         data = bt.feeds.YahooFinanceCSVData(dataname=path,fromdate=datetime.strptime(start_date,"%Y-%m-%d"),
         todate=datetime.strptime(end_date,"%Y-%m-%d"),reverse=False )    
         cerebro.adddata(data) 
-           
-         #return data_feed
+        
         return cerebro
     
     def run_backtest(self, cerebro):
@@ -96,8 +91,7 @@ class BtMain:
         #print(results)
         return results
         
-# Test = BtMain()
-# run = Test.main_runner("ETH-USD","SMA","2021-1-1","2022-1-1")
+
 
 
 
