@@ -11,6 +11,7 @@ from mlflow import log_metric, log_param, log_artifacts, log_params
 
 from backtrader.analyzers import SharpeRatio, Returns, DrawDown, TradeAnalyzer 
 from MA_strategy import MaStrategy
+
 class BtMain:
     """A class that sets up the cerebro and runs the backtests"""
     def main_runner(self, name, strategy, start_date, end_date=None, path=None, cash=600 ): # accepting path to data so as to not download the data if it already exists.
@@ -53,7 +54,7 @@ class BtMain:
     
     def run_backtest(self, cerebro):
         
-        cerebro.broker.setcash(10000.0)
+        # cerebro.broker.setcash(10000.0)
         starting_portfolio = cerebro.broker.getvalue()
         cerRun=cerebro.run()
         final_portfolio=cerebro.broker.getvalue()
