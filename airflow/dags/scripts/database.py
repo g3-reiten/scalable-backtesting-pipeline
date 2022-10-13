@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy import text
-import psycopg2
+
 
 class Connection:
     def __init__(self):

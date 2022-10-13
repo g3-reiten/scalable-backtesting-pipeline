@@ -5,8 +5,8 @@ import pandas as pd
 import sys
 import os
 #sys.path.append(os.path.abspath(".."))
-from scripts.dataloader import DataLoader
-from scripts.db_connection import Connection
+from scripts.loading import DataLoader
+from scripts.database import Connection
 
 default_args = {
     'owner': 'Mohammed',
