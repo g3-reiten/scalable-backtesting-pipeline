@@ -1,8 +1,9 @@
-import backtrader as bt
 import datetime
+
+import backtrader as bt
 import yfinance as yf
-from backtrader import plot 
-from main import BtMain
+from backtrader import plot
+
 
 class MaStrategy(bt.Strategy):
     
@@ -46,21 +47,14 @@ class MaStrategy(bt.Strategy):
 		elif order.status in [order.Canceled, order.Margin, order.Rejected]:
 			self.log("Order was canceled/margin/rejected")
 		self.order = None
+
+
+	def notify_trade(self, trade):
+		if not trade.isclosed:
+			return
+
+		self.log('OPERATION PROFIT, GROSS %.2f, NET %.2f' %
+					(trade.pnl, trade.pnlcomm))
   
-  
-if __name__ == '__main__':
-        # Create a cerebro instance, add our strategy, some starting cash at broker and a 0.1% broker commission
-        cerebro = bt.Cerebro()
-        cerebro.addstrategy(MaStrategy)
-        cerebro.broker.setcash(10000)
-        cerebro.broker.setcommission(commission=0.001)
-        FEED = BtMain()
-        data = bt.feeds.PandasData(dataname=FEED.get_feeds('SOL-USD','2021-1-1','2022-1-1'))
-        cerebro.adddata(data)
-    
-        print('<START> Brokerage account: $%.2f' % cerebro.broker.getvalue())
-        cerebro.run()
-        print('<FINISH> Brokerage account: $%.2f' % cerebro.broker.getvalue())
-        # Plot the strategy
-        cerebro.plot(style='candlestick',loc='grey', grid=False) #You can leave inside the paranthesis empty
+
             
