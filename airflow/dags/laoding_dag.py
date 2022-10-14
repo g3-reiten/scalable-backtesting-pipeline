@@ -40,7 +40,7 @@ def kafka_stream():
     "define topic and initialise producer for puplishing"
 
 
-    
+
 with DAG(
     dag_id='data_to_postgres_loader',
     default_args=default_args,
@@ -66,4 +66,4 @@ with DAG(
     )
 
 # data_reader_modifier>>
-table_creator>>insert_data
+table_creator>>insert_data>>kafka_stream
