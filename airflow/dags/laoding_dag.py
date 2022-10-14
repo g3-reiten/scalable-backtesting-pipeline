@@ -1,4 +1,3 @@
-from cgi import print_exception
 from datetime import timedelta, datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
@@ -24,8 +23,8 @@ default_args = {
 def read_and_data():
     """csv data reading and add uuid column
     """
-    # dl = DataLoader()
-    df = pd.read_csv('/opt/scalable-backtesting-pipeline/data/BTC-USD.csv')
+    dl = DataLoader()
+    df = dl.read_csv('/home/mohammed/Desktop/10 Academy projects/scalable-backtesting-pipeline/data/BTC-USD.csv')
     df.to_csv('./BTC.csv',index=False)
 
 def create_table():
