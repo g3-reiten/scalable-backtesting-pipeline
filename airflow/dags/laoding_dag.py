@@ -36,7 +36,11 @@ def insert_data_to_db():
     con = Connection()
     price = pd.read_csv('./data/BTC_USD.csv')
     con.df_to_sql('BTC_price', price)
+def kafka_stream():
+    "define topic and initialise producer for puplishing"
 
+
+    
 with DAG(
     dag_id='data_to_postgres_loader',
     default_args=default_args,
@@ -55,6 +59,10 @@ with DAG(
     insert_data = PythonOperator(
         task_id='insert_data_to_db',
         python_callable=insert_data_to_db
+    )
+    insert_data = PythonOperator(
+        task_id='stream_to_kafka',
+        python_callable=kafka_stream
     )
 
 # data_reader_modifier>>
