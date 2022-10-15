@@ -7,6 +7,9 @@ import os
 #sys.path.append(os.path.abspath(".."))
 from scripts.loading import DataLoader
 from scripts.database import Connection
+from scripts.Kafka_producer import KProducerClass
+from scripts.kafka_connector import KafkaConnect
+
 
 default_args = {
     'owner': 'Mohammed',
@@ -38,7 +41,10 @@ def insert_data_to_db():
     con.df_to_sql('BTC_price', price)
 def kafka_stream():
     "define topic and initialise producer for puplishing"
-    return 
+    connect = KafkaConnect()
+    produce = KProducerClass()
+    connect.connect_to_kafka
+    produce.create_producer()
 
 
 with DAG(
