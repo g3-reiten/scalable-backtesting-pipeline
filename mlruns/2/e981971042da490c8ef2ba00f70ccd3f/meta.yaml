@@ -1,0 +1,15 @@
+artifact_uri: mlruns/2/e981971042da490c8ef2ba00f70ccd3f/artifacts
+end_time: 1665859760797
+entry_point_name: ''
+experiment_id: '2'
+lifecycle_stage: active
+name: ''
+run_id: e981971042da490c8ef2ba00f70ccd3f
+run_uuid: e981971042da490c8ef2ba00f70ccd3f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1665859760664
+status: 3
+tags: []
+user_id: nhgirma
