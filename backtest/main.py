@@ -49,7 +49,7 @@ class BtMain:
         
         cerebro = bt.Cerebro()
         cerebro.broker.setcash(cash)
-        #cerebro.broker.setcommission(commission=commission)
+        cerebro.broker.setcommission(commission=commission)
         cerebro.addstrategy(strategy)
         cerebro.addanalyzer(SharpeRatio, _name='sharpe')
         cerebro.addanalyzer(Returns, _name='returns')
@@ -146,8 +146,8 @@ class BtMain:
         return results
         
 
-test = BtMain()
-cere = test.run_pipeline(asset_name='SOL-USD',strategy_name='donchain',start_date='2021-1-1', end_date='2022-1-1')
+# test = BtMain()
+# cere = test.run_pipeline(asset_name='SOL-USD',strategy_name='sma_rsi',start_date='2021-1-1', end_date='2022-1-1')
 
 
 
