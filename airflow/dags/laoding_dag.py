@@ -38,7 +38,7 @@ def insert_data_to_db():
     con.df_to_sql('BTC_price', price)
 def kafka_stream():
     "define topic and initialise producer for puplishing"
-
+    return 
 
 
 with DAG(
@@ -60,10 +60,10 @@ with DAG(
         task_id='insert_data_to_db',
         python_callable=insert_data_to_db
     )
-    insert_data = PythonOperator(
+    kafka_stream = PythonOperator(
         task_id='stream_to_kafka',
         python_callable=kafka_stream
     )
 
 # data_reader_modifier>>
-table_creator>>insert_data>>kafka_stream
+table_creator>>insert_data>>kafka_stream 
