@@ -2,6 +2,7 @@ from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
 
 import datetime
+import json
 import os
 import sys
 from datetime import datetime
@@ -14,7 +15,7 @@ from backtrader.analyzers import DrawDown, Returns, SharpeRatio, TradeAnalyzer, 
 from MA_strategy import MaStrategy
 from sma_crossover_strategy import SmaCross
 from SMA_rsi_strategy import SMA_RSI
-from mlflow import log_artifacts, log_metric, log_param, log_params
+from mlflow import log_artifacts, log_metric, log_param
 
 
 class BtMain:
@@ -108,12 +109,30 @@ class BtMain:
         
         return results
 
-    def run_pipeline(self, name,strategy,start_date,end_date,cash=1000):
+    def run_pipeline(self, asset_name,strategy,start_date,end_date,cash=1000):
+        
+        strategies = {"sma" : MaStrategy, "sma_rsi":SMA_RSI,"sma_cross":SmaCross} 
         
         
-        cerebro = self.prepare_cerebro(name=name,strategy=strategy,start_date=start_date,end_date=end_date,cash=cash) 
-        result = self.run_test(cerebro)
-        return 
+        with open("./sceneParams.json", "r") as f:
+            data = json.load(f)
+            data = {}
+            if strategy_name == None:
+                strategy_name = data["indicator"]
+            strategy = strategies[strategy_name]
+            
+            if asset_name == None:    
+                asset_name= data["asset"]
+            
+            if start_date==None:
+                start_date = data["dateRange"]["startDate"]
+
+            if end_date==None:
+                end_date = data["dateRange"]["endDate"]
+
+        cerebro = self.prepare_cerebro(asset_name=asset_name,strategy=strategy,start_date=start_date,end_date=end_date,cash=cash) 
+        results = self.run_test(cerebro)
+        return results
         
 
 
