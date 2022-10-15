@@ -107,11 +107,14 @@ class BtMain:
         # print(results)
         
         return results
-        
-t = BtMain()
 
-cerebro = t.main_runner('BTC-USD',SMA_RSI,'2021-1-1') 
-result = t.run_backtest(cerebro)
+    def run_pipeline(self, name,strategy,start_date,end_date,cash=1000):
+        
+        
+# t = BtMain()
+
+# cerebro = t.main_runner('BTC-USD',SMA_RSI,'2021-1-1') 
+# result = t.run_backtest(cerebro)
 
 
 
