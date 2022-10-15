@@ -15,6 +15,7 @@ from backtrader.analyzers import DrawDown, Returns, SharpeRatio, TradeAnalyzer, 
 from MA_strategy import MaStrategy
 from sma_crossover_strategy import SmaCross
 from SMA_rsi_strategy import SMA_RSI
+from donchain_channel_strat import MyStrategy
 from mlflow import log_artifacts, log_metric, log_param, log_params
 
 
@@ -118,7 +119,7 @@ class BtMain:
 
     def run_pipeline(self, asset_name,strategy_name,start_date,end_date,cash=1000):
         
-        strategies = {"sma" : MaStrategy, "sma_rsi":SMA_RSI,"sma_cross":SmaCross} 
+        strategies = {"sma" : MaStrategy, "sma_rsi":SMA_RSI,"sma_cross":SmaCross, 'donchain':MyStrategy} 
         
         
         f = open("./sceneParams.json", "r")
@@ -145,8 +146,8 @@ class BtMain:
         return results
         
 
-# test = BtMain()
-# cere = test.run_pipeline(asset_name='SOL-USD',strategy_name='sma',start_date='2021-1-1', end_date='2022-1-1')
+test = BtMain()
+cere = test.run_pipeline(asset_name='SOL-USD',strategy_name='donchain',start_date='2021-1-1', end_date='2022-1-1')
 
 
 
