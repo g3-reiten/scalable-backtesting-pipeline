@@ -109,7 +109,7 @@ class BtMain:
         
         return results
 
-    def run_pipeline(self, asset_name,strategy,start_date,end_date,cash=1000):
+    def run_pipeline(self, asset_name,strategy_name,start_date,end_date,cash=1000):
         
         strategies = {"sma" : MaStrategy, "sma_rsi":SMA_RSI,"sma_cross":SmaCross} 
         
@@ -130,14 +130,14 @@ class BtMain:
             if end_date==None:
                 end_date = data["dateRange"]["endDate"]
 
-        cerebro = self.main_runner(asset_name=asset_name,strategy=strategy,start_date=start_date,end_date=end_date,cash=cash) 
-        results = self.run_test(cerebro)
+        cerebro = self.main_runner(name=asset_name,strategy=strategy,start_date=start_date,end_date=end_date,cash=cash) 
+        results = self.run_backtest(cerebro)
         
         return results
         
 
 test = BtMain()
-res = test.run_pipeline(asset_name='BTC-USD',strategy='sma',start_date='2021-1-1')
+res = test.run_pipeline(asset_name='BTC-USD',strategy_name='sma',start_date='2021-1-1', end_date='2022-1-1')
 
 
 
