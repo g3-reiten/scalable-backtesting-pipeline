@@ -17,6 +17,7 @@ class SmaCross(bt.Strategy):
     def next(self):
         if not self.position:  # not in the market
             if self.crossover > 0:  # if fast crosses slow to the upside
+                self.log('Buy Create, %2f' % self.crossover)
                 self.buy()  # enter long
 
         elif self.crossover < 0:  # in the market & cross to the downside
