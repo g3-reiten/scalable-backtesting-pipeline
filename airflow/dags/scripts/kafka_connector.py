@@ -41,3 +41,5 @@ class KafkaConnect():
         TODO: test this!!!
         """
         client.delete_topics(topic_name)
+# if __name__ == '__main__':
+#     KafkaConnect()
