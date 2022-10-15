@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Layout } from '../account/Layout';
-import { BacktestService } from '../../services';
 
-export function BacktestForm() { 
+export function BacktradeForm() { 
     const router = useRouter();
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -24,13 +23,23 @@ export function BacktestForm() {
     const { errors } = formState;
 
     function onSubmit(data) {
-        BacktestService.getBacktestOutput(data)
+        // console.log(data)
+        // let service = AlgoService
+        // data = {
+        //     'from': data.accounts,
+        //     'assetName': data.assetName,
+        //     'unitName': data.unitName,
+        //     'total': BigInt(data.totalUnit),
+        //     'note': AlgoSigner.encoding.stringToByteArray(data.note),
+        //   }
+        // service.signAsset(data)
+        
     }
 
     return (
        <Layout>
             <div className="card">
-                <h4 className="card-header">BackTest</h4>
+                <h4 className="card-header">BackTrade</h4>
                 <div className="card-body">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="form-group">
