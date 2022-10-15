@@ -109,5 +109,17 @@ def signup():
 	else:
 		return make_response('User already exists. Please Log in.', 202)
 
+@app.route('/backtest', methods =['get'])
+def getBacktestOutput():
+	name = request.args.get('name')
+	staratagy = request.args.get('stratagy')
+	cash = request.args.get('cash')
+	commision = request.args.get('commision')
+	print(name, staratagy, cash, commision)
+	filename = "output.txt"
+	with open(filename) as f:
+		content = f.readlines()
+	return jsonify(content)
+
 if __name__ == "__main__":
 	app.run(debug = True)
