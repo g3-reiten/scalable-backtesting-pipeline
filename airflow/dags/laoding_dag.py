@@ -7,7 +7,7 @@ import os
 #sys.path.append(os.path.abspath(".."))
 from scripts.loading import DataLoader
 from scripts.database import Connection
-from scripts.Kafka_producer import KProducerClass
+from scripts.kafka_producer import KProducerClass
 from scripts.kafka_connector import KafkaConnect
 
 
