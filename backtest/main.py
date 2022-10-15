@@ -10,14 +10,16 @@ import backtrader as bt
 import mlflow
 import pandas as pd
 import yfinance as yf
-from backtrader.analyzers import DrawDown, Returns, SharpeRatio, TradeAnalyzer
+from backtrader.analyzers import DrawDown, Returns, SharpeRatio, TradeAnalyzer, SQN
 from MA_strategy import MaStrategy
+from sma_crossover_strategy import SmaCross
+from SMA_rsi_strategy import SMA_RSI
 from mlflow import log_artifacts, log_metric, log_param, log_params
 
 
 class BtMain:
     """A class that sets up the cerebro and runs the backtests"""
-    def main_runner(self, name, strategy, start_date, end_date=None, path=None, cash=600 ): # accepting path to data so as to not download the data if it already exists.
+    def main_runner(self, name, strategy, start_date, end_date=None, path=None, cash=1000, commission=0 ): # accepting path to data so as to not download the data if it already exists.
         if path==None:
             path=f'./data/{name}.csv'
         if end_date==None:
@@ -34,6 +36,7 @@ class BtMain:
             log_param('start_date', start_date)
             log_param('end_date',end_date)
             log_param('starting_cash',cash)
+            log_param('commssion',commission)
             
    
         path_exist = os.path.exists(path)     # path exists or not
@@ -44,11 +47,13 @@ class BtMain:
         
         cerebro = bt.Cerebro()
         cerebro.broker.setcash(cash)
+        cerebro.broker.setcommission(commission=commission)
         cerebro.addstrategy(strategy)
         cerebro.addanalyzer(SharpeRatio, _name='sharpe')
         cerebro.addanalyzer(Returns, _name='returns')
         cerebro.addanalyzer(DrawDown, _name='draw')
         cerebro.addanalyzer(TradeAnalyzer, _name='trade')
+        cerebro.addanalyzer(bt.analyzers.SQN, _name='sqn') #system quantity number
         
         data = bt.feeds.YahooFinanceCSVData(dataname=path,fromdate=datetime.strptime(start_date,"%Y-%m-%d"),
         todate=datetime.strptime(end_date,"%Y-%m-%d"),reverse=False )    
@@ -69,6 +74,9 @@ class BtMain:
         trades=metrics.analyzers.trade.get_analysis()
         returns_amount=metrics.analyzers.returns.get_analysis()
         draw_down=metrics.analyzers.draw.get_analysis()
+        Sqn = metrics.analyzers.sqn.get_analysis()
+        
+        #cerebro.plot()
         
         results['start_portfolio']=starting_portfolio
         log_metric('start_portfolio',results['start_portfolio'])
@@ -93,12 +101,16 @@ class BtMain:
         
         results['loss_trade']=trades['lost']['total']
         log_metric('loss_trade',results['loss_trade'])
-        #print(results)
+        # DICT = {'starting_portfolio':starting_portfolio,'final_portfolio':final_portfolio,'sharpe_ratio':   }
+        mlflow.end_run()
+        results['sqn_returns']=Sqn['sqn']
+        # print(results)
+        
         return results
         
 t = BtMain()
 
-cerebro = t.main_runner('BTC-USD',MaStrategy,'2021-1-1') 
+cerebro = t.main_runner('BTC-USD',SMA_RSI,'2021-1-1') 
 result = t.run_backtest(cerebro)
 
 
