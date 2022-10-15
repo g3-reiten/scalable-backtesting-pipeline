@@ -1,0 +1,4 @@
+outs:
+- md5: 2204cdd86bcdfcbccbcd74d84147c85a
+  size: 45105
+  path: ETH-USD.csv
