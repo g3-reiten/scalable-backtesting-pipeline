@@ -1,0 +1,8 @@
+start_portfolio: 1000
+final_portfolio: 1146.1
+return: 0.13636487452051635
+max_drawdown: 16.729999999999997
+total_trade: 7
+win_trade: 3
+loss_trade: 3
+sqn_returns: 0.3502594260919858

@@ -1,0 +1,49 @@
+                     List of relations
+ Schema |              Name              | Type  |  Owner  
+--------+--------------------------------+-------+---------
+ public | BTC_price                      | table | airflow
+ public | ab_permission                  | table | airflow
+ public | ab_permission_view             | table | airflow
+ public | ab_permission_view_role        | table | airflow
+ public | ab_register_user               | table | airflow
+ public | ab_role                        | table | airflow
+ public | ab_user                        | table | airflow
+ public | ab_user_role                   | table | airflow
+ public | ab_view_menu                   | table | airflow
+ public | alembic_version                | table | airflow
+ public | amharicnews                    | table | airflow
+ public | callback_request               | table | airflow
+ public | celery_taskmeta                | table | airflow
+ public | celery_tasksetmeta             | table | airflow
+ public | connection                     | table | airflow
+ public | dag                            | table | airflow
+ public | dag_code                       | table | airflow
+ public | dag_owner_attributes           | table | airflow
+ public | dag_pickle                     | table | airflow
+ public | dag_run                        | table | airflow
+ public | dag_schedule_dataset_reference | table | airflow
+ public | dag_tag                        | table | airflow
+ public | dag_warning                    | table | airflow
+ public | dagrun_dataset_event           | table | airflow
+ public | dataset                        | table | airflow
+ public | dataset_dag_run_queue          | table | airflow
+ public | dataset_event                  | table | airflow
+ public | import_error                   | table | airflow
+ public | job                            | table | airflow
+ public | log                            | table | airflow
+ public | log_template                   | table | airflow
+ public | rendered_task_instance_fields  | table | airflow
+ public | serialized_dag                 | table | airflow
+ public | session                        | table | airflow
+ public | sla_miss                       | table | airflow
+ public | slot_pool                      | table | airflow
+ public | task_fail                      | table | airflow
+ public | task_instance                  | table | airflow
+ public | task_map                       | table | airflow
+ public | task_outlet_dataset_reference  | table | airflow
+ public | task_reschedule                | table | airflow
+ public | trigger                        | table | airflow
+ public | variable                       | table | airflow
+ public | xcom                           | table | airflow
+(44 rows)
+
