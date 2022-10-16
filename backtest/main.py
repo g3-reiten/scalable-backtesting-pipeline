@@ -32,7 +32,7 @@ class BtMain:
             except:
                 pass
             mlflow.set_tracking_uri('mlruns') 
-            mlflow.set_experiment('MA_strategy')
+            mlflow.set_experiment('SMA_final')
             mlflow.start_run(run_name=name)  
             log_param('name',name)
             log_param('start_date', start_date)
@@ -98,18 +98,38 @@ class BtMain:
         
         results['max_drawdown'] = draw_down['max']['drawdown']
         log_metric('max_drawdown',results['max_drawdown'])
-        
-        results['total_trade']=trades['total']['total']
+        try:
+             results['total_trade']=trades['total']['total']
+        except:
+             results['total_trade']="Undefined"
         log_metric('total_trade',results['total_trade'])
+
+        # results['total_trade']=trades['total']['total']
+        # log_metric('total_trade',results['total_trade'])
         
-        results['win_trade']=trades['won']['total']
-        log_metric('win_trade',results['win_trade'])
+        try:
+            results['win_trade']=trades['won']['total']
+        except:
+            results['win_trade']="Undefined"
         
-        results['loss_trade']=trades['lost']['total']
-        log_metric('loss_trade',results['loss_trade'])
+        
+        try:
+            results['loss_trade']=trades['lost']['total']
+        except:
+            results['loss_trade']="Undefined"
+        
+        try:
+            log_metric('win_trade',results['win_trade'])
+            log_metric('loss_trade',results['loss_trade'])
+        except:
+            pass        
         # DICT = {'starting_portfolio':starting_portfolio,'final_portfolio':final_portfolio,'sharpe_ratio':   }
         
         results['sqn_returns']=Sqn['sqn']
+        # x = cerebro.plot(volume=False, savefig=True, figfilename='./img/backtrader-plot.png')
+        figure = cerebro.plot(style ='candlebars')[0][0]
+        figure.savefig('./img/backtrader-plot.png')
+        log_artifacts('./img/backtrader-plot.png')
         # print(results)
         with open('./test_results/result_metrics.txt','w') as f:
             for key, value in results.items(): 
@@ -145,9 +165,8 @@ class BtMain:
         
         return results
         
-
 # test = BtMain()
-# cere = test.run_pipeline(asset_name='SOL-USD',strategy_name='sma_rsi',start_date='2021-1-1', end_date='2022-1-1')
+# cere = test.run_pipeline(asset_name='BTC-USD',strategy_name='sma',start_date='2021-1-1', end_date='2022-1-1')
 
 
 
